@@ -1,13 +1,12 @@
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from './lib/reactQuery';
+import { AppProvider } from '@AppProvider';
 
 import { Todo } from '@features/todo';
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <AppProvider>
       <Todo />
-    </QueryClientProvider>
+    </AppProvider>
   );
 }
 

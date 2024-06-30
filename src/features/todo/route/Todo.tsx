@@ -1,4 +1,5 @@
 import { MainLayout, Sidebar } from '../layouts';
+import { Tasks } from '@features/tasks';
 
 export const Todo = () => {
   return (
@@ -7,7 +8,7 @@ export const Todo = () => {
         <Sidebar />
 
         <MainLayout>
-          dashboard
+          <Tasks />
         </MainLayout>
       </div>
     </div>

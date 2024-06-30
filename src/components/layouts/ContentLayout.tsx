@@ -10,8 +10,8 @@ export const ContentLayout = ({
   title,
 }: ContentLayoutProps) => {
   return (
-    <div className="flex h-full max-w-[800px] flex-col">
-      <h1 className="text-[40px] font-extrabold">{title}</h1>
+    <div className="flex h-full max-w-[700px] flex-col">
+      <h1 className="text-[30px] font-extrabold">{title}</h1>
 
       <div className="mt-[30px] flex-grow">{children}</div>
     </div>
