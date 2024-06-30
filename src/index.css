@@ -20,6 +20,12 @@
   input {
     @apply font-segoe text-black;
   }
+
+  input,
+  textarea,
+  select {
+    @apply border-none bg-transparent focus:outline-none;
+  }
 }
 
 @layer components {
@@ -28,7 +34,11 @@
     @apply h-[18px] w-[18px];
   }
 
-  .icon-md {
+  .icon-rg {
+    @apply h-[20px] w-[20px];
+  }
+
+  .icon-md { 
     @apply h-[24px] w-[24px];
   }
 
