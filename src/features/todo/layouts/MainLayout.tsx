@@ -1,9 +1,7 @@
-import { ReactNode } from 'react';
-
 import { TodoHeader } from './TodoHeader';
 
 type MainLayoutProps = {
-  children: ReactNode;
+  children: React.ReactNode;
 };
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
