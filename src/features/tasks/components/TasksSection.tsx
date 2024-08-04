@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { ErrorMessage, Spinner } from '@components/feedback';
 import { Button } from '@components/inputs/buttons';
 import { TasksList } from './TasksList';
@@ -10,6 +12,9 @@ import {
 } from '../constants';
 
 export const TasksSection = () => {
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get('status');
+
   // Fetch tasks
   const {
     data: tasks,
@@ -17,13 +22,12 @@ export const TasksSection = () => {
     isSuccess,
     isError,
     refetch,
-  } = useGetTasks();
+  } = useGetTasks({ status });
 
   // Tasks hook
   const {
     activeTasks,
     completedTasks,
-    tasksType,
     isActiveTasksEmpty,
     isCompletedTasksEmpty,
   } = useTasks({ tasks: tasks?.data, isSuccess });
@@ -51,7 +55,7 @@ export const TasksSection = () => {
 
   return (
     <div>
-      {tasksType === 'all' && (
+      {!status && (
         <>
           <TasksList
             title="Active"
@@ -69,7 +73,7 @@ export const TasksSection = () => {
         </>
       )}
 
-      {tasksType === 'active' && (
+      {status === 'active' && (
         <TasksList
           title="Active"
           tasks={activeTasks}
@@ -78,7 +82,7 @@ export const TasksSection = () => {
         />
       )}
 
-      {tasksType === 'completed' && (
+      {status === 'completed' && (
         <TasksList
           title="Completed"
           tasks={completedTasks}
