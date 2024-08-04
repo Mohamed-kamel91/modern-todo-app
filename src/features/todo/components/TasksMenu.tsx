@@ -1,3 +1,5 @@
+import { Link, useSearchParams } from 'react-router-dom';
+
 import { Badge } from '@components/data-display';
 import { Button } from '@components/inputs/buttons';
 import {
@@ -13,16 +15,31 @@ import AllIcon from '../../../assets/icons/list-bullet.svg?react';
 import ActiveIcon from '../../../assets/icons/plus-circle.svg?react';
 import CompletedIcon from '../../../assets/icons/check-circle.svg?react';
 
+enum Status {
+  ALL = 0,
+  ACTIVE = 1,
+  COMPLETED = 2,
+}
+
+const STATUS_MAP: Record<string, number> = {
+  all: Status.ALL,
+  active: Status.ACTIVE,
+  completed: Status.COMPLETED,
+};
+
 export const TasksMenu = () => {
-  const {
-    setTasksType,
-    activeTasksCount,
-    completedTasksCount,
-    allTasksCount,
-  } = useTasksStore();
+  const { activeTasksCount, completedTasksCount, allTasksCount } =
+    useTasksStore((state) => state);
+
+  const [searchParams] = useSearchParams();
+  
+  const filterStatus = searchParams.get('status');
+  const initialActive = filterStatus
+    ? STATUS_MAP[filterStatus]
+    : undefined;
 
   return (
-    <NavMenu>
+    <NavMenu initialActive={initialActive}>
       <NavMenuList
         title="Tasks"
         icon={<TasksIcon className="icon-md" />}
@@ -30,13 +47,14 @@ export const TasksMenu = () => {
         {/* All tasks */}
         <NavMenuItem className="ml-[34px]">
           <Button
+            as={Link}
+            to="tasks"
             style={{ fontWeight: 'inherit' }}
             className="font-inherit w-full"
             variant="default"
             size="sm"
             align="left"
             icon={<AllIcon className="icon-sm stroke-2" />}
-            onClick={() => setTasksType('all')}
           >
             All
           </Button>
@@ -53,13 +71,14 @@ export const TasksMenu = () => {
         {/* Active tasks */}
         <NavMenuItem className="ml-[34px]">
           <Button
+            as={Link}
+            to="tasks?status=active"
             style={{ fontWeight: 'inherit' }}
             className="w-full"
             variant="default"
             size="sm"
             align="left"
             icon={<ActiveIcon className="icon-sm stroke-2" />}
-            onClick={() => setTasksType('active')}
           >
             Active
           </Button>
@@ -68,7 +87,6 @@ export const TasksMenu = () => {
             className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
             size="sm"
             variant="default"
-            active={false}
           >
             {activeTasksCount}
           </Badge>
@@ -77,13 +95,14 @@ export const TasksMenu = () => {
         {/* Completed tasks */}
         <NavMenuItem className="ml-[34px]">
           <Button
+            as={Link}
+            to="tasks?status=completed"
             style={{ fontWeight: 'inherit' }}
             className="w-full"
             variant="default"
             size="sm"
             align="left"
             icon={<CompletedIcon className="icon-sm stroke-2" />}
-            onClick={() => setTasksType('completed')}
           >
             Completed
           </Button>
@@ -92,7 +111,6 @@ export const TasksMenu = () => {
             className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
             size="sm"
             variant="default"
-            active={false}
           >
             {completedTasksCount}
           </Badge>
