@@ -1,18 +1,24 @@
-import { cn } from '@utils';
+import React, { Children, cloneElement } from 'react';
+
 import {
   NavMenuProvider,
   useNavMenuContext,
 } from './navmenu-context';
-import React, { Children, cloneElement } from 'react';
+import { cn } from '@utils';
 
 type NavMenuProps = {
   className?: string;
+  initialActive?: number;
   children: React.ReactNode;
 };
 
-export const NavMenu = ({ className, children }: NavMenuProps) => {
+export const NavMenu = ({
+  className,
+  initialActive,
+  children,
+}: NavMenuProps) => {
   return (
-    <NavMenuProvider>
+    <NavMenuProvider options={{ initialActive }}>
       <div className={cn(className)}>{children}</div>
     </NavMenuProvider>
   );
@@ -31,7 +37,7 @@ export const NavMenuList = ({
   icon,
   children,
 }: NavMenuListProps) => {
-  const { activeItem, setActiveItem } = useNavMenuContext();
+  const { active, setActive } = useNavMenuContext();
 
   return (
     <>
@@ -47,8 +53,8 @@ export const NavMenuList = ({
           return cloneElement(
             child as React.ReactElement<NavMenuItemProps>,
             {
-              isActive: activeItem === index,
-              handleActiveItem: () => setActiveItem(index),
+              isActive: active === index,
+              handleActive: () => setActive(index),
             }
           );
         })}
@@ -61,14 +67,14 @@ type NavMenuItemProps = {
   className?: string;
   isActive?: boolean;
   children: React.ReactNode;
-  handleActiveItem?: () => void;
+  handleActive?: () => void;
 };
 
 export const NavMenuItem = ({
   className,
   isActive,
   children,
-  handleActiveItem,
+  handleActive,
 }: NavMenuItemProps) => {
   return (
     <li
@@ -78,7 +84,7 @@ export const NavMenuItem = ({
         className
       )}
       aria-selected={isActive}
-      onClick={handleActiveItem}
+      onClick={handleActive}
     >
       {children}
     </li>
