@@ -11,6 +11,7 @@ export type createTaskDTO = {
   data: Task;
 };
 
+// Axios api
 export const createTask = ({
   data,
 }: createTaskDTO): Promise<AxiosResponse<Task[]>> => {
@@ -21,6 +22,7 @@ type UseCreateTaskParams = {
   mutationConfig?: MutationConfig<typeof createTask>;
 };
 
+// Query hook
 export const useCreateTask = ({
   mutationConfig,
 }: UseCreateTaskParams = {}) => {

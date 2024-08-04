@@ -11,6 +11,7 @@ export type DeleteTaskDTO = {
   taskId: string;
 };
 
+// Axios api
 export const deleteTask = ({
   taskId,
 }: DeleteTaskDTO): Promise<AxiosResponse<Task>> => {
@@ -21,6 +22,7 @@ type UseDeleteTaskParams = {
   mutationConfig?: MutationConfig<typeof deleteTask>;
 };
 
+// Query hook
 export const useDeleteTask = ({
   mutationConfig,
 }: UseDeleteTaskParams = {}) => {

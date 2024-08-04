@@ -15,6 +15,7 @@ export type UpdateTaskDTO = {
   };
 };
 
+// Axios api
 export const updateTask = ({
   taskId,
   data,
@@ -26,6 +27,7 @@ type UseUpdateTaskParams = {
   mutationConfig?: MutationConfig<typeof updateTask>;
 };
 
+// Query hook
 export const useUpdateTask = ({
   mutationConfig,
 }: UseUpdateTaskParams = {}) => {
