@@ -6,26 +6,32 @@ import { QueryConfig } from '@lib/reactQuery';
 import { Task } from '../types';
 
 // Axios api
-export const getTasks = (): Promise<AxiosResponse<Task[]>> => {
-  return api.get('/tasks');
+export const getTasks = (
+  status?: string | null
+): Promise<AxiosResponse<Task[]>> => {
+  return api.get('/tasks', { params: { status } });
 };
 
 // Query options
-export const getTasksQueryOptions = () => {
+export const getTasksQueryOptions = (status?: string | null) => {
   return queryOptions({
     queryKey: ['tasks'],
-    queryFn: getTasks,
+    queryFn: () => getTasks(status),
   });
 };
 
 type UseTasksParams = {
+  status?: string | null;
   queryConfig?: QueryConfig<typeof getTasksQueryOptions>;
 };
 
 // Query hook
-export const useGetTasks = ({ queryConfig }: UseTasksParams = {}) => {
+export const useGetTasks = ({
+  status,
+  queryConfig,
+}: UseTasksParams) => {
   return useQuery({
-    ...getTasksQueryOptions(),
+    ...getTasksQueryOptions(status),
     ...queryConfig,
   });
 };
