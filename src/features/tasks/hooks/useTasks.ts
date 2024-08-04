@@ -11,7 +11,6 @@ type UseTasksData = {
 
 export const useTasks = ({ tasks, isSuccess }: UseTasksData) => {
   const {
-    tasksType,
     activeTasksCount,
     completedTasksCount,
     setTasksCounts,
@@ -20,13 +19,8 @@ export const useTasks = ({ tasks, isSuccess }: UseTasksData) => {
   const isActiveTasksEmpty = activeTasksCount === 0;
   const isCompletedTasksEmpty = completedTasksCount === 0;
 
-  const activeTasks = useMemo(() => {
-    return getActiveTasks(tasks);
-  }, [tasks]);
-
-  const completedTasks = useMemo(() => {
-    return getCompletedTasks(tasks);
-  }, [tasks]);
+  const activeTasks = useMemo(() => getActiveTasks(tasks), [tasks]);
+  const completedTasks = useMemo(() => getCompletedTasks(tasks), [tasks]);
 
   // Change tasks count when tasks updated
   useEffect(() => {
@@ -38,7 +32,6 @@ export const useTasks = ({ tasks, isSuccess }: UseTasksData) => {
   return {
     activeTasks,
     completedTasks,
-    tasksType,
     activeTasksCount,
     completedTasksCount,
     isActiveTasksEmpty,
