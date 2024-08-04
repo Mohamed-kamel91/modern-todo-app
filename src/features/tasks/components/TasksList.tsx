@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { EmptyTasks } from './EmptyTasks';
 import { TaskItem } from './TaskItem';
 
@@ -10,24 +12,22 @@ type TasksListProps = {
   emptyMessage: string;
 };
 
-export const TasksList = ({
-  title,
-  tasks,
-  isEmpty,
-  emptyMessage,
-}: TasksListProps) => {
-  return (
-    <>
-      <h2 className="text-[18px] font-bold">{title}</h2>
-      {isEmpty ? (
-        <EmptyTasks message={emptyMessage} />
-      ) : (
-        <ul className="mb-[40px] mt-[20px]">
-          {tasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-        </ul>
-      )}
-    </>
-  );
-};
+export const TasksList = React.memo(
+  ({ title, tasks, isEmpty, emptyMessage }: TasksListProps) => {
+    return (
+      <>
+        <h2 className="text-[18px] font-bold">{title}</h2>
+
+        {isEmpty ? (
+          <EmptyTasks message={emptyMessage} />
+        ) : (
+          <ul className="mb-[40px] mt-[20px]">
+            {tasks?.map((task) => (
+              <TaskItem key={task.id} task={task} />
+            ))}
+          </ul>
+        )}
+      </>
+    );
+  }
+);
