@@ -4,6 +4,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { z } from 'zod';
+
 import { UpdateTaskDTO } from '../api/updateTask';
 import { DeleteTaskDTO } from '../api/deleteTask';
 
@@ -36,4 +37,4 @@ export type TaskMutation<Data, Variables> = UseMutationResult<
 export type UpdateTaskMutation = TaskMutation<Task, UpdateTaskDTO>;
 export type DeleteTaskMutation = TaskMutation<Task, DeleteTaskDTO>;
 
-export type TasksType = 'all' | 'active' | 'completed';
+export type TasksStatus = 'all' | 'active' | 'completed';
