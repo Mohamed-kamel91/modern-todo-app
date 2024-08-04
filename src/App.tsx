@@ -1,11 +1,12 @@
-import { AppProvider } from '@AppProvider';
+import { RouterProvider } from 'react-router-dom';
 
-import { Todo } from '@features/todo';
+import { AppProvider } from '@AppProvider';
+import { router } from '@routes';
 
 function App() {
   return (
     <AppProvider>
-      <Todo />
+      <RouterProvider router={router} />
     </AppProvider>
   );
 }
