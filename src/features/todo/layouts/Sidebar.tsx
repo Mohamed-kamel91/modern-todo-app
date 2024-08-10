@@ -1,4 +1,4 @@
-import { TasksMenu, Profile } from '../components';
+import { TasksMenu, ProfileMenu } from '../components';
 
 export const Sidebar = () => {
   return (
@@ -8,7 +8,7 @@ export const Sidebar = () => {
       </nav>
 
       <div className="mt-auto">
-        <Profile />
+        <ProfileMenu />
       </div>
     </div>
   );

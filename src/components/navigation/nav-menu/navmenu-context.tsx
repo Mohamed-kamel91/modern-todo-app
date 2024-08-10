@@ -1,12 +1,20 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-// Checkout form Context
+// Context
 export type NavMenuContextType = {
-  activeItem: number;
-  setActiveItem: React.Dispatch<React.SetStateAction<number>>;
+  active: number;
+  setActive: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const NavMenuContext = createContext<NavMenuContextType | null>(null);
+const NavMenuContext = createContext<NavMenuContextType | null>(
+  null
+);
 
 // Context consumer
 export const useNavMenuContext = () => {
@@ -23,16 +31,31 @@ export const useNavMenuContext = () => {
 
 // Context provider
 type NavMenuProviderProps = {
+  options?: {
+    initialActive?: number;
+  };
   children: React.ReactNode;
 };
 
 export const NavMenuProvider = ({
+  options = {},
   children,
 }: NavMenuProviderProps) => {
-  const [activeItem, setActiveItem] = useState<number>(0);
+  const [active, setActive] = useState<number>(-1);
+
+  const value = useMemo(() => ({ active, setActive }), [active]);
+
+  useEffect(() => {
+    if (
+      options?.initialActive !== null &&
+      options?.initialActive !== undefined
+    ) {
+      setActive(options.initialActive);
+    }
+  }, [options?.initialActive]);
 
   return (
-    <NavMenuContext.Provider value={{ activeItem, setActiveItem }}>
+    <NavMenuContext.Provider value={value}>
       {children}
     </NavMenuContext.Provider>
   );

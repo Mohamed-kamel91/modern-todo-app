@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-
-import { getTasksQueryOptions } from './getTasks';
 
 import { api } from '@lib/axios';
 import { MutationConfig } from '@lib/reactQuery';
@@ -11,6 +12,7 @@ export type DeleteTaskDTO = {
   taskId: string;
 };
 
+// Axios api
 export const deleteTask = ({
   taskId,
 }: DeleteTaskDTO): Promise<AxiosResponse<Task>> => {
@@ -21,18 +23,18 @@ type UseDeleteTaskParams = {
   mutationConfig?: MutationConfig<typeof deleteTask>;
 };
 
+// Query hook
 export const useDeleteTask = ({
   mutationConfig,
 }: UseDeleteTaskParams = {}) => {
   const queryClient = useQueryClient();
-  const { queryKey } = getTasksQueryOptions();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
     mutationFn: deleteTask,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
 
       onSuccess?.(...args);
     },

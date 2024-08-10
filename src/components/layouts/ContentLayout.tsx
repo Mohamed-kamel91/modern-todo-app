@@ -1,3 +1,4 @@
+import { Head } from '@components/data-display';
 import { ReactNode } from 'react';
 
 type ContentLayoutProps = {
@@ -6,14 +7,21 @@ type ContentLayoutProps = {
 };
 
 export const ContentLayout = ({
-  children,
   title,
+  children,
 }: ContentLayoutProps) => {
   return (
-    <div className="flex h-full max-w-[700px] flex-col">
-      <h1 className="text-[30px] font-extrabold">{title}</h1>
+    <>
+      <Head
+        title={title}
+        description="Stay organized and boost productivity."
+      />
+      
+      <div className="flex h-full max-w-[700px] flex-col">
+        <h1>{title}</h1>
 
-      <div className="mt-[30px] flex-grow">{children}</div>
-    </div>
+        <div className="mt-[30px] flex-grow">{children}</div>
+      </div>
+    </>
   );
 };

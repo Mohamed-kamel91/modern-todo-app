@@ -36,7 +36,7 @@ export const Badge = ({
   variant = 'primary',
   size = 'md',
   shape = 'rounded',
-  active = true,
+  active = false,
   children,
   ...props
 }: BadgeProps) => {

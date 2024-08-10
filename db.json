@@ -1,3 +1,49 @@
 {
-  "tasks": []
+  "users": [
+    {
+      "id": "39aeaf2c-325c-4489-b8c4-65db069228e8",
+      "firstName": "mohamed",
+      "lastName": "kamel",
+      "email": "omar@gmail.com",
+      "password": "123asdasd",
+      "createdAt": "2024-08-09T15:36:36.863Z"
+    },
+    {
+      "id": "334e31b8-c84c-4bc6-9a1a-daed75d58a65",
+      "firstName": "Bob",
+      "lastName": "Ziroll",
+      "email": "mohimik91@gmail.com",
+      "password": "sdasdasdasda",
+      "createdAt": "2024-08-09T15:42:33.375Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "a3012dba-1b00-4bc9-9069-3af1e94a4c79",
+      "text": "asdasda",
+      "isCompleted": false,
+      "status": "active",
+      "createdAt": "2024-08-10T17:02:30.372Z",
+      "modifiedAt": "2024-08-10T17:02:30.372Z",
+      "userId": "334e31b8-c84c-4bc6-9a1a-daed75d58a65"
+    },
+    {
+      "id": "63c6d968-daeb-4cb5-9ef3-69c903a1064f",
+      "userId": "334e31b8-c84c-4bc6-9a1a-daed75d58a65",
+      "text": "asdasda",
+      "isCompleted": false,
+      "status": "active",
+      "createdAt": "2024-08-10T17:11:58.928Z",
+      "modifiedAt": "2024-08-10T17:11:58.928Z"
+    },
+    {
+      "id": "f164f3d4-6b7b-4625-883c-2b298c0fd626",
+      "userId": "39aeaf2c-325c-4489-b8c4-65db069228e8",
+      "text": "asdadadasd",
+      "isCompleted": false,
+      "status": "active",
+      "createdAt": "2024-08-10T17:12:01.783Z",
+      "modifiedAt": "2024-08-10T17:12:01.783Z"
+    }
+  ]
 }

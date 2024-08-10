@@ -1,5 +1,7 @@
-import { MainLayout, Sidebar } from '../layouts';
-import { Tasks } from '@features/tasks';
+import { Outlet } from 'react-router-dom';
+
+import { MainLayout } from '@components/layouts';
+import { Sidebar } from '../layouts';
 
 export const Todo = () => {
   return (
@@ -8,7 +10,7 @@ export const Todo = () => {
         <Sidebar />
 
         <MainLayout>
-          <Tasks />
+          <Outlet />
         </MainLayout>
       </div>
     </div>

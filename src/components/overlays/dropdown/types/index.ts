@@ -17,8 +17,18 @@ export type ToggleProps = {
   }) => React.ReactNode;
 };
 
+export type ListPosition =
+  | 'top-right'
+  | 'bottom-right'
+  | 'top-left'
+  | 'bottom-left'
+  | 'top-full'
+  | 'bottom-full';
+
 export type ListProps = {
   className?: string;
+  position?: ListPosition;
+  width?: 'default' | 'full';
   children: React.ReactNode;
 };
 

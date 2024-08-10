@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { ErrorMessage, Spinner } from '@components/feedback';
 import { Button } from '@components/inputs/buttons';
 import { TasksList } from './TasksList';
@@ -9,7 +11,14 @@ import {
   EMPTY_COMPLETED_TASKS,
 } from '../constants';
 
-export const TasksSection = () => {
+type TasksSectionProps = {
+  userId: string;
+};
+
+export const TasksSection = ({ userId }: TasksSectionProps) => {
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get('status');
+
   // Fetch tasks
   const {
     data: tasks,
@@ -17,13 +26,12 @@ export const TasksSection = () => {
     isSuccess,
     isError,
     refetch,
-  } = useGetTasks();
+  } = useGetTasks({ status, userId });
 
   // Tasks hook
   const {
     activeTasks,
     completedTasks,
-    tasksType,
     isActiveTasksEmpty,
     isCompletedTasksEmpty,
   } = useTasks({ tasks: tasks?.data, isSuccess });
@@ -35,7 +43,7 @@ export const TasksSection = () => {
   if (isError) {
     return (
       <ErrorMessage
-        message="Oops, something went wrong! Please refresh the page."
+        message="Oops, something went wrong! Please try again."
         action={
           <Button
             size="sm"
@@ -49,9 +57,13 @@ export const TasksSection = () => {
     );
   }
 
+  // Check if status is valid
+  const isValidStatus =
+    status === 'active' || status === 'completed';
+
   return (
     <div>
-      {tasksType === 'all' && (
+      {(!status || !isValidStatus) && (
         <>
           <TasksList
             title="Active"
@@ -69,7 +81,7 @@ export const TasksSection = () => {
         </>
       )}
 
-      {tasksType === 'active' && (
+      {status === 'active' && (
         <TasksList
           title="Active"
           tasks={activeTasks}
@@ -78,7 +90,7 @@ export const TasksSection = () => {
         />
       )}
 
-      {tasksType === 'completed' && (
+      {status === 'completed' && (
         <TasksList
           title="Completed"
           tasks={completedTasks}

@@ -1,10 +1,9 @@
 import React from 'react';
-import clsx from 'clsx';
 
 import {
   DropdownProvider,
   DropDownContextType,
-  useDropdownContext,
+  useDropdown,
 } from './dropdown-context';
 
 import { cn } from '@utils';
@@ -37,21 +36,42 @@ export const Dropdown = ({
 
 Dropdown.Toggle = ({ children }: ToggleProps) => {
   const { active, isOpen, toggle } =
-    useDropdownContext() as DropDownContextType;
+    useDropdown() as DropDownContextType;
 
   return <>{children({ active, isOpen, toggle })}</>;
 };
 
 /* DROPDOWN LIST */
+const listPositionStyles = {
+  'top-right': 'bottom-[calc(100%+5px)] left-[calc(100%-34px)]',
+  'bottom-right': 'top-[calc(100%+5px)] left-[calc(100%-34px)]',
+  'top-left': 'bottom-[calc(100%+5px)] right-[calc(100%-34px)]',
+  'bottom-left': 'top-[calc(100%+5px)] right-[calc(100%-34px)]',
+  'top-full': 'bottom-[calc(100%+5px)] right-0 left-0',
+  'bottom-full': 'top-[calc(100%+5px)] right-0 left-0',
+};
 
-Dropdown.List = ({ className = '', children }: ListProps) => {
+Dropdown.List = ({
+  className = '',
+  position = 'top-right',
+  width = 'default',
+  children,
+}: ListProps) => {
   const { isOpen, close, listRef } =
-    useDropdownContext() as DropDownContextType;
+    useDropdown() as DropDownContextType;
+
+  const baseStyles =
+    'max-h-[250px] rounded-[10px] bg-white py-[10px] shadow-dropdown';
+  const positionOffsets = `absolute z-50 ${listPositionStyles[position]} `;
+  const listWidth =
+    width === 'full' ? 'w-full' : 'min-w-[190px]';
 
   return isOpen ? (
     <div
-      className={clsx(
-        'absolute right-[calc(100%-34px)] top-[calc(100%+5px)] z-50 max-h-[250px] min-w-[190px] rounded-[10px] bg-white py-[10px] shadow-dropdown transition-all duration-100 ease-in',
+      className={cn(
+        baseStyles,
+        positionOffsets,
+        listWidth,
         className
       )}
       ref={listRef as React.MutableRefObject<HTMLDivElement>}
@@ -65,12 +85,15 @@ Dropdown.List = ({ className = '', children }: ListProps) => {
 
 Dropdown.Item = ({ id, children }: ItemProps) => {
   const { active, handleActive } =
-    useDropdownContext() as DropDownContextType;
+    useDropdown() as DropDownContextType;
 
   return (
     <li
       id={id}
-      className={cn('mx-[6px]', active === id ? 'is-active' : '')}
+      className={cn(
+        'mx-[6px]',
+        active === id ? 'is-active' : ''
+      )}
       onClick={handleActive(id)}
     >
       {children}

@@ -23,7 +23,7 @@ const DropDownContext = createContext<DropDownContextType | null>(
 );
 
 // Reusable dropdown context hook
-export const useDropdownContext = () => {
+export const useDropdown = () => {
   return useContext(DropDownContext);
 };
 

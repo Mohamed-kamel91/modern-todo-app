@@ -1,11 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useCreateTask } from '../api/createTask';
 
 import { validate } from '@utils/validation';
-import { useCreateTask } from '../api/createTask';
 import { createNewTask, isTextEmpty } from '../utils';
 import { Task, taskSchema } from '../types';
 
-export const useAddTask = () => {
+export const useAddTask = (userId: string) => {
   const [text, setText] = useState<string>('');
   const [errors, setErrors] = useState<Partial<
     Record<keyof Task, string[]>
@@ -13,13 +15,20 @@ export const useAddTask = () => {
 
   const taskInputRef = useRef<HTMLInputElement>(null);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Add task mutation
   const createTaskMutation = useCreateTask({
     mutationConfig: {
-      onSuccess: () => resetForm(),
-      // onError: displayNotification()
+      onSuccess: () => {
+        resetForm();
+        focusTaskInput();
+      },
     },
   });
 
+  // Task input change handler
   const handleTextChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
@@ -33,22 +42,31 @@ export const useAddTask = () => {
     [errors]
   );
 
+  // Task submit handler
   const handleSubmitTask = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const task = createNewTask(text);
-      const result = validate(task, taskSchema);
+      if (!userId) {
+        navigate('/auth/login', {
+          state: `${location.pathname}${location.search}`,
+        });
+        return;
+      }
 
+      const task = createNewTask(text, userId);
+      console.log(task);
+      
+      const result = validate(task, taskSchema);
+      console.log(result.data);
+      
       if (result.success) {
         createTaskMutation.mutate({ data: result.data });
       } else {
         setErrors(result.error.flatten().fieldErrors);
       }
-
-      focusTaskInput();
     },
-    [text]
+    [text, userId]
   );
 
   const focusTaskInput = () => {

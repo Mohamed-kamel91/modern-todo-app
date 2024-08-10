@@ -26,7 +26,7 @@ export const Button = <C extends React.ElementType = 'button'>({
       className={cn(
         buttonStyles({ variant, size, textAlign, align }),
         shape === 'sharp' && 'rounded-full',
-        isLoading && 'disabled:opacity-100',
+        isLoading && 'disabled:opacity-80',
         className
       )}
       {...props}

@@ -21,6 +21,10 @@
     @apply font-segoe text-black;
   }
 
+  h1 {
+    @apply text-[30px] font-extrabold;
+  }
+  
   input,
   textarea,
   select {

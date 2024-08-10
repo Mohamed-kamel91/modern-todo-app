@@ -1,7 +1,8 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import {
+  useQueryClient,
+  useMutation,
+} from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-
-import { getTasksQueryOptions } from './getTasks';
 
 import { api } from '@lib/axios';
 import { MutationConfig } from '@lib/reactQuery';
@@ -11,9 +12,12 @@ export type createTaskDTO = {
   data: Task;
 };
 
+// Axios api
 export const createTask = ({
   data,
 }: createTaskDTO): Promise<AxiosResponse<Task[]>> => {
+  console.log(data);
+  
   return api.post('/tasks', data);
 };
 
@@ -21,18 +25,18 @@ type UseCreateTaskParams = {
   mutationConfig?: MutationConfig<typeof createTask>;
 };
 
+// Query hook
 export const useCreateTask = ({
   mutationConfig,
-}: UseCreateTaskParams = {}) => {
+}: UseCreateTaskParams) => {
   const queryClient = useQueryClient();
-  const { queryKey } = getTasksQueryOptions();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
     mutationFn: createTask,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
 
       onSuccess?.(...args);
     },
