@@ -33,10 +33,10 @@ export const TasksMenu = () => {
 
   const [searchParams] = useSearchParams();
   
-  const filterStatus = searchParams.get('status');
-  const initialActive = filterStatus
-    ? STATUS_MAP[filterStatus]
-    : undefined;
+  const status = searchParams.get('status');
+  const initialActive = status
+    ? STATUS_MAP[status]
+    : STATUS_MAP.all;
 
   return (
     <NavMenu initialActive={initialActive}>

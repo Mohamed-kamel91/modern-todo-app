@@ -12,6 +12,7 @@ import {
   useRemoveTask,
 } from '../hooks';
 import { Task } from '../types';
+import { cn } from '@utils';
 
 type TaskItemProps = {
   task: Task;
@@ -37,12 +38,23 @@ export const TaskItem = ({ task }: TaskItemProps) => {
     handleCompleteTask,
     handleMarkAsActive,
     handleMarkAsCompleted,
-  } = useCompleteTask({ id, isCompleted }, updateTaskMutation);
+  } = useCompleteTask(
+    { id, isCompleted },
+    updateTaskMutation
+  );
 
-  const { handleDeleteTask } = useRemoveTask(id, deleteTaskMutation);
+  const { handleDeleteTask } = useRemoveTask(
+    id,
+    deleteTaskMutation
+  );
 
   return (
-    <li className="relative mb-[10px] cursor-pointer rounded-[10px] bg-gray-light transition-colors duration-100 ease-in ">
+    <li
+      className={cn(
+        'relative mb-[12px] cursor-pointer rounded-[10px] bg-gray-light transition-shadow duration-75 ease-out',
+        isEditing ? 'shadow-edit' : 'shadow-none'
+      )}
+    >
       <div className="flex py-[4px]">
         <div className="flex flex-grow items-center">
           <Label className="ml-[14px] flex items-center">
@@ -50,21 +62,28 @@ export const TaskItem = ({ task }: TaskItemProps) => {
               type="checkbox"
               name="isCompleted"
               checked={isCompleted}
+              aria-label={
+                isCompleted
+                  ? 'Mark as active'
+                  : 'Mark as completed'
+              }
               disabled={updateTaskMutation.isPending}
               onChange={handleCompleteTask}
             />
           </Label>
+
           <Label className="flex-grow select-none">
             <Input
               ref={inputTextRef}
               className={clsx(
-                'font-medium',
+                '!font-medium shadow-none focus:shadow-none',
                 isCompleted && 'line-through'
               )}
               type="text"
               name="text"
               value={textInputVal}
               disabled={!isEditing}
+              aria-label="Edit task"
               onChange={handleTextChange}
               onBlur={handleTextBlur}
               onKeyDown={handleKeydown}

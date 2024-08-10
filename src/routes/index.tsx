@@ -2,18 +2,43 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { Tasks } from '@features/tasks';
 import { Todo } from '@features/todo';
+import { PrivateRoute } from './PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute';
 
 export const router = createBrowserRouter([
   {
+    path: '/auth/register',
+    lazy: async () => {
+      const { Register } = await import('@features/auth');
+      return {
+        element: (
+          <RestrictedRoute>
+            <Register />
+          </RestrictedRoute>
+        ),
+      };
+    },
+  },
+  {
     path: '/auth/login',
     lazy: async () => {
-      const { Login } = await import('@features/auth/Login');
-      return { Component: Login };
+      const { Login } = await import('@features/auth');
+      return {
+        element: (
+          <RestrictedRoute>
+            <Login />
+          </RestrictedRoute>
+        ),
+      };
     },
   },
   {
     path: '/',
-    Component: Todo,
+    element: (
+      <PrivateRoute>
+        <Todo />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

@@ -39,7 +39,7 @@ export const TaskActions = ({
       )}
     </Dropdown.Toggle>
 
-    <Dropdown.List>
+    <Dropdown.List position='bottom-left'>
       <Dropdown.Item id="edit-task">
         <Button
           className="w-full hover:bg-gray-light"

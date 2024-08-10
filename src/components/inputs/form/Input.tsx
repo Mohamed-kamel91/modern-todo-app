@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 
 // Utility function to generate styles for checkboxes
@@ -11,11 +11,15 @@ const getCheckboxStyles = (isChecked: boolean) => {
   );
 };
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  isInvalid?: boolean;
-};
+export type InputProps =
+  React.InputHTMLAttributes<HTMLInputElement> & {
+    isInvalid?: boolean;
+  };
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<
+  HTMLInputElement,
+  InputProps
+>(
   (
     {
       className,
@@ -29,12 +33,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputStyles =
-      type === 'checkbox'
+    const inputStyles = useMemo(() => {
+      return type === 'checkbox'
         ? getCheckboxStyles(checked)
-        : 'w-full overflow-hidden rounded-[10px] p-[12px]';
+        : 'p-[12px] w-full overflow-hidden rounded-[10px] shadow-input focus:shadow-input-focus transition-shadow duration-250 ease-out';
+    }, [checked]);
 
     const combinedStyles = clsx(
+      'font-normal',
       inputStyles,
       disabled && 'pointer-events-none cursor-not-allowed',
       className

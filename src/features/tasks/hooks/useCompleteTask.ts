@@ -14,6 +14,7 @@ export const useCompleteTask = (
       taskId: id,
       data: {
         isCompleted: !isCompleted,
+        status: isCompleted ? 'active' : 'completed',
       },
     });
   };
@@ -23,6 +24,7 @@ export const useCompleteTask = (
       taskId: id,
       data: {
         isCompleted: false,
+        status: 'active',
       },
     });
   };
@@ -32,6 +34,7 @@ export const useCompleteTask = (
       taskId: id,
       data: {
         isCompleted: true,
+        status: 'completed',
       },
     });
   };

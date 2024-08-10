@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Spinner } from '@components/feedback/spinner/Spinner';
 
 import { cn } from '@utils/cn';
@@ -7,9 +9,10 @@ import {
   baseStyles,
   iconButtonVariants,
 } from './constants/iconButtonStyles';
-import React from 'react';
 
-export const IconButton = <C extends React.ElementType = 'button'>({
+export const IconButton = <
+  C extends React.ElementType = 'button',
+>({
   as,
   className,
   variant = 'primary',
@@ -19,7 +22,10 @@ export const IconButton = <C extends React.ElementType = 'button'>({
   children,
   ...props
 }: IconButtonProps<C>) => {
-  const iconButtonStyles = getStyles(baseStyles, iconButtonVariants);
+  const iconButtonStyles = getStyles(
+    baseStyles,
+    iconButtonVariants
+  );
 
   const Comp = as || 'button';
 
@@ -33,7 +39,11 @@ export const IconButton = <C extends React.ElementType = 'button'>({
       disabled={isLoading}
       {...props}
     >
-      {isLoading ? <Spinner size={'rg'} /> : <span>{children}</span>}
+      {isLoading ? (
+        <Spinner size={'rg'} />
+      ) : (
+        <span>{children}</span>
+      )}
     </Comp>
   );
 };

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import { MainLayout, Sidebar } from '../layouts';
+import { MainLayout } from '@components/layouts';
+import { Sidebar } from '../layouts';
 
 export const Todo = () => {
   return (

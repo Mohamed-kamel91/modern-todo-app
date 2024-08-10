@@ -34,16 +34,21 @@ export default {
     extend: {
       boxShadow: {
         dropdown: 'rgba(0, 0, 0, 0.1) 0px 0px 12px 0px',
-        task: 'rgba(33, 33, 33, 0.2) 0px 0px 1px 1px',
+        input: 'rgba(33, 33, 33, 0.2) 0px 0px 1px 1px',
+        'input-focus': 'rgba(33, 33, 33, 0.2) 0px 0px 1px 2px',
         danger: '#e94d37 0px 0px 1px 2px',
+        edit: '#212121 0px 0px 1px 3px',
       },
       transitionProperty: {
         checkbox:
           'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, border-width',
       },
+      transitionDuration: {
+        250: '250ms',
+      },
       animation: {
-        'spin': 'spin 700ms linear infinite',
-      }
+        spin: 'spin 700ms linear infinite',
+      },
     },
   },
   plugins: [],

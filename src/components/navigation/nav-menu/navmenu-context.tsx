@@ -1,17 +1,20 @@
 import React, {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 
-// Checkout form Context
+// Context
 export type NavMenuContextType = {
   active: number;
   setActive: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const NavMenuContext = createContext<NavMenuContextType | null>(null);
+const NavMenuContext = createContext<NavMenuContextType | null>(
+  null
+);
 
 // Context consumer
 export const useNavMenuContext = () => {
@@ -38,11 +41,18 @@ export const NavMenuProvider = ({
   options = {},
   children,
 }: NavMenuProviderProps) => {
-  const [active, setActive] = useState<number>(
-    () => options?.initialActive ?? 0
-  );
+  const [active, setActive] = useState<number>(-1);
 
   const value = useMemo(() => ({ active, setActive }), [active]);
+
+  useEffect(() => {
+    if (
+      options?.initialActive !== null &&
+      options?.initialActive !== undefined
+    ) {
+      setActive(options.initialActive);
+    }
+  }, [options?.initialActive]);
 
   return (
     <NavMenuContext.Provider value={value}>
