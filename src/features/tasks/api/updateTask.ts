@@ -13,7 +13,7 @@ export type UpdateTaskDTO = {
   data: {
     text?: Task['text'];
     isCompleted?: Task['isCompleted'];
-    status: Task['status'];
+    status?: Task['status'];
   };
 };
 

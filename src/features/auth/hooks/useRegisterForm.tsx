@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { validate } from '@utils/validation';
+import { validate } from '@utils';
 import { createUser } from '../utils';
 import {
   RegisterInput,

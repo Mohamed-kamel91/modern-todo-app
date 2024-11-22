@@ -16,8 +16,6 @@ export type createTaskDTO = {
 export const createTask = ({
   data,
 }: createTaskDTO): Promise<AxiosResponse<Task[]>> => {
-  console.log(data);
-  
   return api.post('/tasks', data);
 };
 

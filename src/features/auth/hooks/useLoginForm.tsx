@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useLogin } from '../api/login';
 
-import { validate } from '@utils/validation';
+import { validate } from '@utils';
 import { LoginInput, loginSchema, User } from '../types';
 import { AxiosResponse } from 'axios';
 

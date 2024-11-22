@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useCreateTask } from '../api/createTask';
@@ -55,25 +55,21 @@ export const useAddTask = (userId: string) => {
       }
 
       const task = createNewTask(text, userId);
-      console.log(task);
-      
       const result = validate(task, taskSchema);
-      console.log(result.data);
-      
+
       if (result.success) {
         createTaskMutation.mutate({ data: result.data });
       } else {
         setErrors(result.error.flatten().fieldErrors);
+        focusTaskInput();
       }
     },
     [text, userId]
   );
 
   const focusTaskInput = () => {
-    const input = taskInputRef.current;
-
-    if (input) {
-      input.focus();
+    if (taskInputRef.current) {
+      taskInputRef.current.focus();
     }
   };
 
@@ -89,6 +85,10 @@ export const useAddTask = (userId: string) => {
   const resetErrors = () => {
     setErrors(null);
   };
+
+  useEffect(() => {
+    focusTaskInput();
+  }, []);
 
   return {
     text,

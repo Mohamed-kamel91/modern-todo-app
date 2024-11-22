@@ -19,7 +19,7 @@ export const NavMenu = ({
 }: NavMenuProps) => {
   return (
     <NavMenuProvider options={{ initialActive }}>
-      <div className={cn(className)}>{children}</div>
+      <div className={className}>{children}</div>
     </NavMenuProvider>
   );
 };
@@ -42,13 +42,13 @@ export const NavMenuList = ({
   return (
     <>
       {title && (
-        <div className="flex gap-[10px] py-[10px] text-[16px] font-bold">
+        <div className="flex gap-[10px] my-[10px] text-[16px] font-bold">
           {icon && icon}
           <div className="flex-grow">{title}</div>
         </div>
       )}
 
-      <ul className={cn(className)}>
+      <ul className={className}>
         {Children.map(children, (child, index) => {
           return cloneElement(
             child as React.ReactElement<NavMenuItemProps>,

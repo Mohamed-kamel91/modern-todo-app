@@ -6,7 +6,7 @@ import { Logout } from '@features/auth/components/Logout';
 
 export const ProfileMenu = () => {
   return (
-    <Dropdown>
+    <Dropdown className='my-[10px]'>
       <Dropdown.Toggle>
         {({ isOpen, toggle }) => (
           <Button

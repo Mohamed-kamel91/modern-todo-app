@@ -8,7 +8,7 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="relative flex flex-grow flex-col overflow-y-scroll">
+    <div className="relative flex flex-grow flex-col overflow-y-auto">
       <header className="sticky top-0 z-50 bg-white px-[20px] py-[20px]">
         <Link to="/">
           <Logo />
