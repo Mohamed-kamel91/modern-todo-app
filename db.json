@@ -1,4 +1,23 @@
 {
-  "users": [],
-  "tasks": []
+  "users": [
+    {
+      "id": "df425be7-9ad4-410a-b17e-6a696637e1fc",
+      "firstName": "mohamed",
+      "lastName": "kamel",
+      "email": "mohkamel91@gmail.com",
+      "password": "Fizer123",
+      "createdAt": "2024-11-22T20:16:22.205Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "3f23000e-ee0b-4148-a47b-11292546a7a8",
+      "userId": "df425be7-9ad4-410a-b17e-6a696637e1fc",
+      "text": "asdasda",
+      "isCompleted": false,
+      "status": "active",
+      "createdAt": "2024-11-22T20:58:19.157Z",
+      "modifiedAt": "2024-11-22T20:58:19.157Z"
+    }
+  ]
 }

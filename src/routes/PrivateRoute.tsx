@@ -12,11 +12,13 @@ export const PrivateRoute = ({
   const location = useLocation();
   const { user } = useAuth();
 
+  const urlPath = `${location.pathname}${location.search}`;
+  
   if (!user) {
     return (
       <Navigate
         to="/auth/login"
-        state={location.pathname ?? '/'}
+        state={urlPath ?? '/'}
         replace
       />
     );

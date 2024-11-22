@@ -18,8 +18,8 @@ export const AuthLayout = ({
   children,
 }: AuthLayoutProps) => {
   const location = useLocation();
+  
   const redirectTo = location.state;
-
   const isLogin = title.toLowerCase() === 'log in';
 
   return (
