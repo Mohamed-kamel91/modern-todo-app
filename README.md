@@ -32,14 +32,14 @@ A simple and intuitive task management application built with React, React Query
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/isOmarDev/todoList-modern-stack.git
+   git clone https://github.com/Mohamed-kamel91/modern-todo-app.git
    cd task-manager-app
    ```
 
 2. **Install Dependencies**
 
    ```bash
-   npm install
+   yarn install
    ```
 
 3. **Set Up Environment Variables**
@@ -51,7 +51,7 @@ A simple and intuitive task management application built with React, React Query
 
 4. **Run the Application**
    ```bash
-   npm run dev
+   yarn run dev
    ```
    The app will be accessible at [http://localhost:5000](http://localhost:5000).
 
@@ -109,7 +109,7 @@ src/features/awesome-feature
 
 ## Scripts
 
-- `npm run dev`: Start the app in development mode.
-- `npm run build`: Build the app for production.
-- `npm run test`: Run tests once.
-- `npm run test:watch`: Run tests and keep watch.
+- `yarn run dev`: Start the app in development mode.
+- `yarn build`: Build the app for production.
+- `yarn run test`: Run tests once.
+- `yarn run test:watch`: Run tests and keep watch.
