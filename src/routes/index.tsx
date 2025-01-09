@@ -7,10 +7,11 @@ import { Todo } from '@features/todo';
 
 export const router = createBrowserRouter([
   {
+    path: 'auth',
     element: <RestrictedRoute />,
     children: [
       {
-        path: '/auth/register',
+        path: 'register',
         lazy: async () => {
           const { Register } = await import(
             '@features/auth/routes/Register'
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: '/auth/login',
+        path: 'login',
         lazy: async () => {
           const { Login } = await import(
             '@features/auth/routes/Login'
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/tasks" replace={true} />,
+        element: <Navigate to="tasks" replace />,
       },
       {
         path: 'tasks',

@@ -9,11 +9,52 @@ import {
 } from '@components/navigation/nav-menu';
 
 import { useTasksStore } from '@features/tasks';
+import { TasksStore } from '@features/tasks/store/tasks-store';
+
+import { cn } from '@utils';
 
 import TasksIcon from '../../../assets/icons/calendar-days.svg?react';
 import AllIcon from '../../../assets/icons/list-bullet.svg?react';
 import ActiveIcon from '../../../assets/icons/plus-circle.svg?react';
 import CompletedIcon from '../../../assets/icons/check-circle.svg?react';
+
+type TaskMenuItem = {
+  label: string;
+  to: string;
+  icon: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & {
+      title?: string;
+    }
+  >;
+  badgeCount: keyof Pick<
+    TasksStore,
+    'allTasksCount' | 'activeTasksCount' | 'completedTasksCount'
+  >;
+};
+
+const taskMenuItems: TaskMenuItem[] = [
+  {
+    label: 'All',
+    to: 'tasks',
+    icon: AllIcon,
+    // icon: <AllIcon className="icon-sm stroke-2" />,
+    badgeCount: 'allTasksCount',
+  },
+  {
+    label: 'Active',
+    to: '?status=active',
+    icon: ActiveIcon,
+    // icon: <ActiveIcon className="icon-sm stroke-2" />,
+    badgeCount: 'activeTasksCount',
+  },
+  {
+    label: 'Completed',
+    to: '?status=completed',
+    icon: CompletedIcon,
+    // icon: <CompletedIcon className="icon-sm stroke-2" />,
+    badgeCount: 'completedTasksCount',
+  },
+];
 
 enum Status {
   ALL = 0,
@@ -28,11 +69,9 @@ const STATUS_MAP: Record<string, number> = {
 };
 
 export const TasksMenu = () => {
-  const { activeTasksCount, completedTasksCount, allTasksCount } =
-    useTasksStore((state) => state);
-
+  const tasksStore = useTasksStore((state) => state);
   const [searchParams] = useSearchParams();
-  
+
   const status = searchParams.get('status');
   const initialActive = status
     ? STATUS_MAP[status]
@@ -44,77 +83,41 @@ export const TasksMenu = () => {
         title="Tasks"
         icon={<TasksIcon className="icon-md" />}
       >
-        {/* All tasks */}
-        <NavMenuItem className="ml-[34px]">
-          <Button
-            as={Link}
-            to="tasks"
-            style={{ fontWeight: 'inherit' }}
-            className="font-inherit w-full"
-            variant="default"
-            size="sm"
-            align="left"
-            icon={<AllIcon className="icon-sm stroke-2" />}
-          >
-            All
-          </Button>
-          <Badge
-            style={{ fontWeight: 'inherit' }}
-            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
-            size="sm"
-            variant="default"
-          >
-            {allTasksCount}
-          </Badge>
-        </NavMenuItem>
-
-        {/* Active tasks */}
-        <NavMenuItem className="ml-[34px]">
-          <Button
-            as={Link}
-            to="tasks?status=active"
-            style={{ fontWeight: 'inherit' }}
-            className="w-full"
-            variant="default"
-            size="sm"
-            align="left"
-            icon={<ActiveIcon className="icon-sm stroke-2" />}
-          >
-            Active
-          </Button>
-          <Badge
-            style={{ fontWeight: 'inherit' }}
-            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
-            size="sm"
-            variant="default"
-          >
-            {activeTasksCount}
-          </Badge>
-        </NavMenuItem>
-
-        {/* Completed tasks */}
-        <NavMenuItem className="ml-[34px]">
-          <Button
-            as={Link}
-            to="tasks?status=completed"
-            style={{ fontWeight: 'inherit' }}
-            className="w-full"
-            variant="default"
-            size="sm"
-            align="left"
-            icon={<CompletedIcon className="icon-sm stroke-2" />}
-          >
-            Completed
-          </Button>
-          <Badge
-            style={{ fontWeight: 'inherit' }}
-            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
-            size="sm"
-            variant="default"
-          >
-            {completedTasksCount}
-          </Badge>
-        </NavMenuItem>
+        {taskMenuItems.map(
+          ({ label, to, icon: Icon, badgeCount }) => (
+            <NavMenuItem key={label} className="ml-[34px]">
+              <Button
+                as={Link}
+                to={to}
+                style={{ fontWeight: 'inherit' }}
+                className="w-full"
+                variant="default"
+                size="sm"
+                align="left"
+                icon={
+                  <Icon
+                    className={cn(
+                      'icon-sm stroke-2',
+                      status === label.toLowerCase()
+                        ? 'stroke-[2.5]'
+                        : 'stroke-2'
+                    )}
+                  />
+                }
+              >
+                {label}
+              </Button>
+              <Badge
+                style={{ fontWeight: 'inherit' }}
+                className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[13px]"
+                size="sm"
+                variant="default"
+              >
+                {tasksStore[badgeCount]}
+              </Badge>
+            </NavMenuItem>
+          )
+        )}
       </NavMenuList>
     </NavMenu>
   );

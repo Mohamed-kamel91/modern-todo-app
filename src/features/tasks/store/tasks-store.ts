@@ -3,7 +3,7 @@ import { devtools } from 'zustand/middleware';
 
 import { Task } from '../types';
 
-type TasksStore = {
+export type TasksStore = {
   allTasksCount: number;
   activeTasksCount: number;
   completedTasksCount: number;
