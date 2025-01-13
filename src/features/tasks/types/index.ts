@@ -26,9 +26,11 @@ export const taskSchema = z.object({
   modifiedAt: z.date(),
 });
 
-export type Task = z.infer<typeof taskSchema> & {
-  userId: string;
-};
+export type Task = z.infer<typeof taskSchema>;
+
+// export type Task = z.infer<typeof taskSchema> & {
+//   userId: string;
+// };
 
 export type GetTaskQuery = UseQueryResult<
   AxiosResponse<Task[], any>,
