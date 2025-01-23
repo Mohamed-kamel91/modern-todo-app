@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useCreateTask } from '../api/createTask';
 
@@ -13,28 +12,18 @@ export const useAddTask = (userId: string) => {
     Record<keyof Task, string[]>
   > | null>(null);
 
-  const taskInputRef = useRef<HTMLInputElement>(null);
-
-  const navigate = useNavigate();
-  const location = useLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Add task mutation
-  const createTaskMutation = useCreateTask({
-    mutationConfig: {
-      onSuccess: () => {
-        resetForm();
-        focusTaskInput();
-      },
-    },
-  });
+  const addTaskMutation = useCreateTask();
 
-  // Task input change handler
-  const handleTextChange = useCallback(
+  // Input change handler
+  const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
 
       if (isTextEmpty(value) && errors?.text) {
-        resetErrors();
+        clearErrors();
       }
 
       setText(value);
@@ -42,60 +31,56 @@ export const useAddTask = (userId: string) => {
     [errors]
   );
 
-  // Task submit handler
-  const handleSubmitTask = useCallback(
+  // Submit handler
+  const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!userId) {
-        navigate('/auth/login', {
-          state: `${location.pathname}${location.search}`,
-        });
-        return;
-      }
-
       const task = createNewTask(text, userId);
-      const result = validate(task, taskSchema);
-
-      if (result.success) {
-        createTaskMutation.mutate({ data: result.data });
+      const validation = validate(task, taskSchema);
+      
+      if (validation.success) {
+        addTaskMutation.mutate(
+          { data: validation.data },
+          {
+            onSuccess: () => {
+              clearInput();
+              clearErrors();
+              focusInput();
+            },
+          }
+        );
       } else {
-        setErrors(result.error.flatten().fieldErrors);
-        focusTaskInput();
+        setErrors(validation.error.flatten().fieldErrors);
+        focusInput();
       }
     },
     [text, userId]
   );
 
-  const focusTaskInput = () => {
-    if (taskInputRef.current) {
-      taskInputRef.current.focus();
-    }
-  };
-
-  const resetForm = () => {
-    resetText();
-    resetErrors();
-  };
-
-  const resetText = () => {
+  const clearInput = () => {
     setText('');
   };
 
-  const resetErrors = () => {
+  const clearErrors = () => {
     setErrors(null);
   };
 
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  // Input focus on first render
   useEffect(() => {
-    focusTaskInput();
+    focusInput();
   }, []);
 
   return {
     text,
     errors,
-    taskInputRef,
-    createTaskMutation,
-    handleTextChange,
-    handleSubmitTask,
+    inputRef,
+    addTaskMutation,
+    handleChange,
+    handleSubmit,
   };
 };
