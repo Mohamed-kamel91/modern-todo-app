@@ -23,10 +23,9 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
   const {
     data: tasks,
     isPending,
-    isSuccess,
     isError,
     refetch,
-  } = useGetTasks({ status, userId });
+  } = useGetTasks({ userId, status });
 
   // Tasks hook
   const {
@@ -34,7 +33,7 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
     completedTasks,
     isActiveTasksEmpty,
     isCompletedTasksEmpty,
-  } = useTasks({ tasks: tasks?.data, isSuccess });
+  } = useTasks({ tasks: tasks?.data });
 
   if (isPending) {
     return <Spinner size="lg" className="mt-[30px]" />;
@@ -57,17 +56,18 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
     );
   }
 
-  // Check if status is valid
+  // Check if status query param value is valid
   const isValidStatus =
     status === 'active' || status === 'completed';
 
   return (
     <div>
-      {(!status || !isValidStatus) && (
+      {!isValidStatus && (
         <>
           <TasksList
             title="Active"
             tasks={activeTasks}
+            status="active"
             isEmpty={isActiveTasksEmpty}
             emptyMessage={EMPTY_ACTIVE_TASKS}
           />
@@ -75,6 +75,7 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
           <TasksList
             title="Completed"
             tasks={completedTasks}
+            status="completed"
             isEmpty={isCompletedTasksEmpty}
             emptyMessage={EMPTY_COMPLETED_TASKS}
           />
@@ -85,6 +86,7 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
         <TasksList
           title="Active"
           tasks={activeTasks}
+          status={status}
           isEmpty={isActiveTasksEmpty}
           emptyMessage={EMPTY_ACTIVE_TASKS}
         />
@@ -94,6 +96,7 @@ export const TasksSection = ({ userId }: TasksSectionProps) => {
         <TasksList
           title="Completed"
           tasks={completedTasks}
+          status={status}
           isEmpty={isCompletedTasksEmpty}
           emptyMessage={EMPTY_COMPLETED_TASKS}
         />

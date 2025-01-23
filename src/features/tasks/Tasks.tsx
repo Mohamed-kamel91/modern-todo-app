@@ -15,7 +15,7 @@ export const Tasks = () => {
         </div>
 
         <div className="sticky bottom-0 z-[100] bg-white pb-[20px] pt-[20px]">
-          <AddTask userId={userId}/>
+          <AddTask userId={userId} />
         </div>
       </div>
     </ContentLayout>
