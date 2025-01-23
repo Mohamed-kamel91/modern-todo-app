@@ -19,6 +19,7 @@ export const Error = ({
       )}
       role="alert"
       aria-label={errorMessage}
+      aria-live="polite"
     >
       {capitalizeFirst(errorMessage)}
     </div>

@@ -40,6 +40,7 @@ export const Spinner = ({
       <div
         className={clsx(spinnerStyles({ color, size }))}
         role="status"
+         aria-label="spinner"
       />
     </div>
   );

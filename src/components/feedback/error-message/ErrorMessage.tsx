@@ -9,7 +9,7 @@ export const ErrorMessage = ({
 }: ErrorMessageProps) => {
   return (
     <div>
-      <p>{message}</p>
+      <p role="alert">{message}</p>
       {action && action}
     </div>
   );
