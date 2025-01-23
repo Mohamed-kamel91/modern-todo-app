@@ -14,14 +14,14 @@ export const AddTask = ({ userId }: AddTaskProps) => {
   const {
     text,
     errors,
-    taskInputRef,
-    createTaskMutation,
-    handleSubmitTask,
-    handleTextChange,
+    inputRef,
+    addTaskMutation,
+    handleChange,
+    handleSubmit,
   } = useAddTask(userId);
 
   return (
-    <Form id="add-task-form" onSubmit={handleSubmitTask}>
+    <Form id="add-task-form" onSubmit={handleSubmit}>
       <Error
         className="mb-[5px]"
         errorMessage={errors?.text?.[0]}
@@ -30,18 +30,19 @@ export const AddTask = ({ userId }: AddTaskProps) => {
       <div className="relative flex rounded-[10px] border border-black-light">
         <Input
           className="shadow-none focus:shadow-none"
-          ref={taskInputRef}
+          ref={inputRef}
           id="add-task-input"
           type="text"
           name="addTask"
           value={text}
           placeholder="What is your next task?"
           autoComplete="off"
+          autoFocus
           isInvalid={!!errors?.text?.[0]}
           minLength={0}
           maxLength={70}
           aria-label="What is your next task?"
-          onChange={handleTextChange}
+          onChange={handleChange}
         />
 
         <Button
@@ -49,9 +50,9 @@ export const AddTask = ({ userId }: AddTaskProps) => {
           type="submit"
           variant="primary"
           icon={<PlusIcon className="icon-rg stroke-2" />}
-          isLoading={createTaskMutation.isPending}
+          isLoading={addTaskMutation.isPending}
           disabled={
-            isTextEmpty(text) || createTaskMutation.isPending
+            isTextEmpty(text) || addTaskMutation.isPending
           }
         >
           Add

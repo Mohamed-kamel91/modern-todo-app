@@ -6,28 +6,33 @@ import { Task } from '../types';
 
 type UseTasksData = {
   tasks: Task[] | undefined;
-  isSuccess: boolean;
 };
 
-export const useTasks = ({ tasks, isSuccess }: UseTasksData) => {
+export const useTasks = ({ tasks }: UseTasksData) => {
   const {
     activeTasksCount,
     completedTasksCount,
+    isActiveTasksEmpty,
+    isCompletedTasksEmpty,
     setTasksCounts,
   } = useTasksStore((state) => state);
 
-  const isActiveTasksEmpty = activeTasksCount === 0;
-  const isCompletedTasksEmpty = completedTasksCount === 0;
+  const activeTasks = useMemo(
+    () => getActiveTasks(tasks),
+    [tasks]
+  );
 
-  const activeTasks = useMemo(() => getActiveTasks(tasks), [tasks]);
-  const completedTasks = useMemo(() => getCompletedTasks(tasks), [tasks]);
+  const completedTasks = useMemo(
+    () => getCompletedTasks(tasks),
+    [tasks]
+  );
 
   // Change tasks count when tasks updated
   useEffect(() => {
-    if (isSuccess && tasks) {
+    if (tasks) {
       setTasksCounts(tasks);
     }
-  }, [isSuccess, tasks]);
+  }, [tasks]);
 
   return {
     activeTasks,

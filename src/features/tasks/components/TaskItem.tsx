@@ -38,10 +38,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
     handleCompleteTask,
     handleMarkAsActive,
     handleMarkAsCompleted,
-  } = useCompleteTask(
-    { id, isCompleted },
-    updateTaskMutation
-  );
+  } = useCompleteTask({ id, isCompleted }, updateTaskMutation);
 
   const { handleDeleteTask } = useRemoveTask(
     id,
