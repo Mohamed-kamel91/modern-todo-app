@@ -26,7 +26,7 @@ type UseCreateTaskParams = {
 // Query hook
 export const useCreateTask = ({
   mutationConfig,
-}: UseCreateTaskParams) => {
+}: UseCreateTaskParams = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
@@ -35,7 +35,6 @@ export const useCreateTask = ({
     mutationFn: createTask,
     onSuccess: (...args) => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
-
       onSuccess?.(...args);
     },
     ...restConfig,
